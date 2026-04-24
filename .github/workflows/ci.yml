@@ -1,0 +1,16 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  ci:
+    uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@ebafc6a677623b252af10dd576e22da0226f05fc
+    with:
+      language: typescript
