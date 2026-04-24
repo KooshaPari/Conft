@@ -14,4 +14,4 @@ permissions:
 
 jobs:
   sast:
-    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@ebafc6a677623b252af10dd576e22da0226f05fc
+    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@ac1fef63f31acb3ec550bfdc1f1915075dd1fbb9
