@@ -1,0 +1,17 @@
+name: SAST
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  sast:
+    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@ebafc6a677623b252af10dd576e22da0226f05fc

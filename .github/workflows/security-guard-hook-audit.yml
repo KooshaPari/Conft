@@ -1,0 +1,16 @@
+name: Security Guard Hook Audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 12 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  hook-audit:
+    uses: KooshaPari/phenoShared/.github/workflows/security-guard-hook-audit-reusable.yml@ebafc6a677623b252af10dd576e22da0226f05fc

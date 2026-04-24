@@ -1,0 +1,17 @@
+name: Alert Sync Issues
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+  security-events: read
+
+jobs:
+  alert-sync:
+    uses: KooshaPari/phenoShared/.github/workflows/alert-sync-issues-reusable.yml@ebafc6a677623b252af10dd576e22da0226f05fc
+    with:
+      auto-label: auto-alert-sync
