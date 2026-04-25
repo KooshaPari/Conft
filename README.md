@@ -110,6 +110,33 @@ npm test
 npm run lint
 ```
 
+## Governance & Contribution
+
+**AgilePlus Tracking**: All work tracked in `/repos/AgilePlus`. Review `CLAUDE.md` for governance and development contracts.
+
+**Quality Standards**: All implementations must pass language-specific linters, formatters, and comprehensive test suites.
+
+**Cross-Language Consistency**: Configuration APIs and behavior patterns are standardized across Rust and TypeScript to ensure portable application code.
+
+## Usage Patterns
+
+Conft powers consistent configuration management across the Phenotype ecosystem. Applications can switch between Rust and TypeScript implementations without changing configuration structure or precedence rules.
+
+**Example Use Cases**:
+- Multi-tenant SaaS configuration (environment-specific profiles)
+- Agent deployment configurations (provider selection, cost limits)
+- Service mesh configuration (ingress rules, policy enforcement)
+
+## Related Phenotype Projects
+
+- **[phenotype-shared](../phenotype-shared)** — Shared infrastructure utilities
+- **[cloud](../cloud)** — Multi-tenant SaaS backend using Conft
+- **[AgilePlus](../AgilePlus)** — Configuration governance
+
 ## License
 
 MIT OR Apache-2.0
+
+**Status**: Active development (Phase 2 planned)  
+**Maintained by**: Phenotype Org  
+**Last Updated**: 2026-04-24
