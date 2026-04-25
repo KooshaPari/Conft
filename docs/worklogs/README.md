@@ -1,5 +1,7 @@
 # Work Audit — Conft
 
+
+**Category: ARCHITECTURE**
 **Index:** See `/Users/kooshapari/CodeProjects/Phenotype/repos/worklogs/README.md`
 
 ## Purpose
