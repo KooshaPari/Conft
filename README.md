@@ -135,7 +135,7 @@ Conft powers consistent configuration management across the Phenotype ecosystem.
 
 ## License
 
-MIT OR Apache-2.0
+MIT — see [LICENSE](./LICENSE).
 
 **Status**: Active development (Phase 2 planned)  
 **Maintained by**: Phenotype Org  
