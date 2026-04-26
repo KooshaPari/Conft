@@ -9,5 +9,5 @@ on:
 
 jobs:
   coverage:
-    uses: KooshaPari/phenotype-infrakit/.github/workflows/coverage.yml@main
+    uses: KooshaPari/phenotype-infrakit/.github/workflows/coverage.yml@a762e9212109b0d1cd15eb819ec9d13ea79226f6
     secrets: inherit
