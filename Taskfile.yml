@@ -6,13 +6,25 @@ vars:
   CONFT_PACKAGE: typescript/packages/conft
 
 tasks:
+  ensure-deps:
+    internal: true
+    desc: Install {{.LANGUAGE}} package dependencies when missing
+    cmds:
+      - |
+        set -eu
+        if [ ! -d "{{.CONFT_PACKAGE}}/node_modules" ]; then
+          cd {{.CONFT_PACKAGE}} && bun install
+        fi
+
   build:
     desc: Build the {{.LANGUAGE}} package with {{.PACKAGE_MANAGER}}
+    deps: [ensure-deps]
     cmds:
       - cd {{.CONFT_PACKAGE}} && bun run build
 
   test:
     desc: Run the {{.LANGUAGE}} test suite when tests are present
+    deps: [ensure-deps]
     cmds:
       - |
         set -eu
@@ -34,6 +46,7 @@ tasks:
 
   lint:
     desc: Run the {{.LANGUAGE}} linter when configuration is present
+    deps: [ensure-deps]
     cmds:
       - |
         set -eu
