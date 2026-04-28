@@ -2,57 +2,72 @@ version: "3"
 
 tasks:
   build:
-    desc: Build detected language targets
+    desc: Build detected project targets
     cmds:
       - |
         set -eu
-        if [ -f rust/phenotype-config/Cargo.toml ]; then
+        found=0
+
+        if [ -f "typescript/packages/conft/package.json" ]; then
+          found=1
+          (cd typescript/packages/conft && bun run build)
+        fi
+
+        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
+          found=1
           (cd rust/phenotype-config && cargo build)
         fi
-        if [ -f typescript/packages/conft/package.json ]; then
-          (cd typescript/packages/conft && bun install --frozen-lockfile)
-          task -d typescript/packages/conft build
+
+        if [ "$found" -eq 0 ]; then
+          echo "No supported build targets found"
+          exit 1
         fi
 
   test:
-    desc: Run detected language tests
+    desc: Run detected project tests
     cmds:
       - |
         set -eu
-        if [ -f rust/phenotype-config/Cargo.toml ]; then
-          (cd rust/phenotype-config && cargo test)
-        fi
-        if [ -f typescript/packages/conft/package.json ]; then
-          (cd typescript/packages/conft && bun install --frozen-lockfile)
-          has_tests=0
-          for test_dir in src tests test; do
-            if [ -d "typescript/packages/conft/$test_dir" ] && \
-              find "typescript/packages/conft/$test_dir" -type f \( \
-                -name '*.test.ts' -o -name '*.test.tsx' -o \
-                -name '*.spec.ts' -o -name '*.spec.tsx' -o \
-                -name '*.test.js' -o -name '*.test.jsx' -o \
-                -name '*.spec.js' -o -name '*.spec.jsx' \
-              \) | grep -q .; then
-              has_tests=1
-              break
-            fi
-          done
-          if [ "$has_tests" -eq 1 ]; then
-            task -d typescript/packages/conft test
+        found=0
+
+        if [ -f "typescript/packages/conft/package.json" ]; then
+          found=1
+          if find \
+            typescript/packages/conft/src \
+            typescript/packages/conft/tests \
+            typescript/packages/conft/test \
+            -type f \
+            \( \
+              -name '*.test.ts' -o -name '*.test.tsx' -o \
+              -name '*.spec.ts' -o -name '*.spec.tsx' -o \
+              -name '*.test.js' -o -name '*.test.jsx' -o \
+              -name '*.spec.js' -o -name '*.spec.jsx' \
+            \) 2>/dev/null | grep -q .; then
+            (cd typescript/packages/conft && bun run test)
           else
             echo "Skipping TypeScript tests (no test files found)"
           fi
         fi
 
+        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
+          found=1
+          (cd rust/phenotype-config && cargo test)
+        fi
+
+        if [ "$found" -eq 0 ]; then
+          echo "No supported test targets found"
+          exit 1
+        fi
+
   lint:
-    desc: Run detected language linters
+    desc: Run detected project linters
     cmds:
       - |
         set -eu
-        if [ -f rust/phenotype-config/Cargo.toml ]; then
-          (cd rust/phenotype-config && cargo clippy -- -D warnings)
-        fi
-        if [ -f typescript/packages/conft/package.json ]; then
+        found=0
+
+        if [ -f "typescript/packages/conft/package.json" ]; then
+          found=1
           has_eslint_config=0
           for cfg in \
             .eslintrc \
@@ -68,12 +83,22 @@ tasks:
               break
             fi
           done
+
           if [ "$has_eslint_config" -eq 1 ]; then
-            (cd typescript/packages/conft && bun install --frozen-lockfile)
-            task -d typescript/packages/conft lint
+            (cd typescript/packages/conft && bun run lint)
           else
             echo "Skipping TypeScript lint (no ESLint config found)"
           fi
+        fi
+
+        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
+          found=1
+          (cd rust/phenotype-config && cargo clippy -- -D warnings)
+        fi
+
+        if [ "$found" -eq 0 ]; then
+          echo "No supported lint targets found"
+          exit 1
         fi
 
   clean:
@@ -81,12 +106,17 @@ tasks:
     cmds:
       - |
         set -eu
-        if [ -f rust/phenotype-config/Cargo.toml ]; then
-          (cd rust/phenotype-config && cargo clean)
+        if [ -f "typescript/packages/conft/package.json" ]; then
+          rm -rf \
+            typescript/packages/conft/dist \
+            typescript/packages/conft/coverage \
+            typescript/packages/conft/.turbo \
+            typescript/packages/conft/.vite \
+            typescript/packages/conft/docs/.vitepress/dist \
+            typescript/packages/conft/docs/.vitepress/cache \
+            typescript/packages/conft/*.tsbuildinfo
         fi
-        if [ -f typescript/packages/conft/package.json ]; then
-          rm -rf typescript/packages/conft/dist \
-                 typescript/packages/conft/coverage \
-                 typescript/packages/conft/.turbo \
-                 typescript/packages/conft/.vite
+
+        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
+          (cd rust/phenotype-config && cargo clean)
         fi

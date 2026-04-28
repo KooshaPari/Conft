@@ -11,7 +11,7 @@
  * - Dependency inversion: domain depends on abstraction
  */
 
-import { ConfigEntry, ConfigValue } from '../domain/config';
+import { ConfigEntry, ConfigValidationError, ConfigValue } from '../domain/config';
 
 /**
  * Port interface for configuration sources.
@@ -58,19 +58,4 @@ export interface ConfigValidator<T = unknown> {
    * Get validation errors.
    */
   getErrors(): ConfigValidationError[];
-}
-
-/**
- * Config validation error for TypeScript.
- */
-export class ConfigValidationError extends Error {
-  constructor(
-    message: string,
-    public readonly path: string[],
-    public readonly value: unknown,
-    public readonly context?: Record<string, unknown>
-  ) {
-    super(message);
-    this.name = 'ConfigValidationError';
-  }
 }
