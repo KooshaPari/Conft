@@ -16,6 +16,10 @@ tasks:
     desc: Run linter
     cmds:
       - bun run lint
+  clean:
+    desc: Remove generated artifacts
+    cmds:
+      - rm -rf dist coverage .turbo .vite docs/.vitepress/dist docs/.vitepress/cache *.tsbuildinfo
   fmt:
     desc: Format code
     cmds:
