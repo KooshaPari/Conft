@@ -1,122 +1,72 @@
 version: "3"
 
+vars:
+  CONFT_PACKAGE: typescript/packages/conft
+
 tasks:
   build:
-    desc: Build detected project targets
+    desc: Build the TypeScript package
     cmds:
-      - |
-        set -eu
-        found=0
-
-        if [ -f "typescript/packages/conft/package.json" ]; then
-          found=1
-          (cd typescript/packages/conft && bun run build)
-        fi
-
-        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
-          found=1
-          (cd rust/phenotype-config && cargo build)
-        fi
-
-        if [ "$found" -eq 0 ]; then
-          echo "No supported build targets found"
-          exit 1
-        fi
+      - cd {{.CONFT_PACKAGE}} && bun run build
 
   test:
-    desc: Run detected project tests
+    desc: Run the TypeScript test suite
     cmds:
       - |
         set -eu
-        found=0
-
-        if [ -f "typescript/packages/conft/package.json" ]; then
-          found=1
-          if find \
-            typescript/packages/conft/src \
-            typescript/packages/conft/tests \
-            typescript/packages/conft/test \
-            -type f \
-            \( \
-              -name '*.test.ts' -o -name '*.test.tsx' -o \
-              -name '*.spec.ts' -o -name '*.spec.tsx' -o \
-              -name '*.test.js' -o -name '*.test.jsx' -o \
-              -name '*.spec.js' -o -name '*.spec.jsx' \
-            \) 2>/dev/null | grep -q .; then
-            (cd typescript/packages/conft && bun run test)
-          else
-            echo "Skipping TypeScript tests (no test files found)"
-          fi
-        fi
-
-        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
-          found=1
-          (cd rust/phenotype-config && cargo test)
-        fi
-
-        if [ "$found" -eq 0 ]; then
-          echo "No supported test targets found"
-          exit 1
+        if find \
+          {{.CONFT_PACKAGE}}/src \
+          {{.CONFT_PACKAGE}}/tests \
+          {{.CONFT_PACKAGE}}/test \
+          -type f \
+          \( \
+            -name '*.test.ts' -o -name '*.test.tsx' -o \
+            -name '*.spec.ts' -o -name '*.spec.tsx' -o \
+            -name '*.test.js' -o -name '*.test.jsx' -o \
+            -name '*.spec.js' -o -name '*.spec.jsx' \
+          \) 2>/dev/null | grep -q .; then
+          cd {{.CONFT_PACKAGE}} && bun run test
+        else
+          echo "Skipping TypeScript tests (no test files found)"
         fi
 
   lint:
-    desc: Run detected project linters
+    desc: Run the TypeScript linter
     cmds:
       - |
         set -eu
-        found=0
-
-        if [ -f "typescript/packages/conft/package.json" ]; then
-          found=1
-          has_eslint_config=0
-          for cfg in \
-            .eslintrc \
-            .eslintrc.json \
-            .eslintrc.js \
-            .eslintrc.cjs \
-            eslint.config.js \
-            eslint.config.mjs \
-            eslint.config.cjs
-          do
-            if [ -f "typescript/packages/conft/$cfg" ]; then
-              has_eslint_config=1
-              break
-            fi
-          done
-
-          if [ "$has_eslint_config" -eq 1 ]; then
-            (cd typescript/packages/conft && bun run lint)
-          else
-            echo "Skipping TypeScript lint (no ESLint config found)"
+        has_eslint_config=0
+        for cfg in \
+          .eslintrc \
+          .eslintrc.json \
+          .eslintrc.js \
+          .eslintrc.cjs \
+          eslint.config.js \
+          eslint.config.mjs \
+          eslint.config.cjs
+        do
+          if [ -f "{{.CONFT_PACKAGE}}/$cfg" ]; then
+            has_eslint_config=1
+            break
           fi
-        fi
+        done
 
-        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
-          found=1
-          (cd rust/phenotype-config && cargo clippy -- -D warnings)
-        fi
-
-        if [ "$found" -eq 0 ]; then
-          echo "No supported lint targets found"
-          exit 1
+        if [ "$has_eslint_config" -eq 1 ]; then
+          cd {{.CONFT_PACKAGE}} && bun run lint
+        else
+          echo "Skipping TypeScript lint (no ESLint config found)"
         fi
 
   clean:
-    desc: Remove generated artifacts
+    desc: Remove generated TypeScript artifacts
     cmds:
       - |
         set -eu
-        if [ -f "typescript/packages/conft/package.json" ]; then
-          rm -rf \
-            typescript/packages/conft/dist \
-            typescript/packages/conft/coverage \
-            typescript/packages/conft/.turbo \
-            typescript/packages/conft/.vite \
-            typescript/packages/conft/docs/.vitepress/dist \
-            typescript/packages/conft/docs/.vitepress/cache \
-            typescript/packages/conft/*.tsbuildinfo
-        fi
-
-        if [ -f "rust/phenotype-config/Cargo.toml" ]; then
-          (cd rust/phenotype-config && cargo clean)
-        fi
+        rm -rf \
+          {{.CONFT_PACKAGE}}/dist \
+          {{.CONFT_PACKAGE}}/coverage \
+          {{.CONFT_PACKAGE}}/.turbo \
+          {{.CONFT_PACKAGE}}/.vite \
+          {{.CONFT_PACKAGE}}/docs/.vitepress/dist \
+          {{.CONFT_PACKAGE}}/docs/.vitepress/cache \
+          {{.CONFT_PACKAGE}}/*.tsbuildinfo
