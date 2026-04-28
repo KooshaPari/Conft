@@ -1,16 +1,18 @@
 version: "3"
 
 vars:
+  LANGUAGE: TypeScript
+  PACKAGE_MANAGER: bun
   CONFT_PACKAGE: typescript/packages/conft
 
 tasks:
   build:
-    desc: Build the TypeScript package
+    desc: Build the {{.LANGUAGE}} package with {{.PACKAGE_MANAGER}}
     cmds:
       - cd {{.CONFT_PACKAGE}} && bun run build
 
   test:
-    desc: Run the TypeScript test suite
+    desc: Run the {{.LANGUAGE}} test suite when tests are present
     cmds:
       - |
         set -eu
@@ -31,7 +33,7 @@ tasks:
         fi
 
   lint:
-    desc: Run the TypeScript linter
+    desc: Run the {{.LANGUAGE}} linter when configuration is present
     cmds:
       - |
         set -eu
@@ -58,7 +60,7 @@ tasks:
         fi
 
   clean:
-    desc: Remove generated TypeScript artifacts
+    desc: Remove generated {{.LANGUAGE}} artifacts
     cmds:
       - |
         set -eu
