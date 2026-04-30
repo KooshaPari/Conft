@@ -1,5 +1,7 @@
 # Conft
 
+**Status:** maintenance
+
 **Universal Configuration Management with Cross-Language Support**
 
 A hexagonal architecture-based configuration framework providing consistent, type-safe configuration management across Rust and TypeScript.
