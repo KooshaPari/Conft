@@ -11,6 +11,6 @@ permissions:
 
 jobs:
   ci:
-    uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@ac1fef63f31acb3ec550bfdc1f1915075dd1fbb9
+    uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@80b1198577542f0e4d565f7bccdf495e50e630c8
     with:
       language: typescript
