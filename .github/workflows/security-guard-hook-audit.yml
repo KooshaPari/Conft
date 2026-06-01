@@ -1,8 +1,4 @@
 name: Security Guard Hook Audit
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
-
 
 on:
   push:
@@ -12,10 +8,9 @@ on:
   schedule:
     - cron: '0 12 * * 1'
 
-timeout-minutes: 15
 permissions:
   contents: read
 
 jobs:
   hook-audit:
-    uses: KooshaPari/phenoShared/.github/workflows/security-guard-hook-audit-reusable.yml@ac1fef63f31acb3ec550bfdc1f1915075dd1fbb9 # pinned
+    uses: KooshaPari/phenoShared/.github/workflows/security-guard-hook-audit-reusable.yml@4b820a6d1eca7884e692e4ec4edf2b59732809cd
