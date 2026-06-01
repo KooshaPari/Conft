@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 */6 * * *'
   workflow_dispatch:
+timeout-minutes: 10
 
 permissions:
   contents: read
@@ -15,3 +16,4 @@ jobs:
     uses: KooshaPari/phenoShared/.github/workflows/alert-sync-issues-reusable.yml@80b1198577542f0e4d565f7bccdf495e50e630c8
     with:
       auto-label: auto-alert-sync
+

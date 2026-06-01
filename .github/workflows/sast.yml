@@ -1,4 +1,8 @@
 name: SAST
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 on:
   push:
@@ -8,10 +12,11 @@ on:
   schedule:
     - cron: '0 6 * * 1'
 
+timeout-minutes: 20
 permissions:
   contents: read
   security-events: write
 
 jobs:
   sast:
-    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@ac1fef63f31acb3ec550bfdc1f1915075dd1fbb9
+    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@ac1fef63f31acb3ec550bfdc1f1915075dd1fbb9 # pinned
