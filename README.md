@@ -1,3 +1,6 @@
+> **Work state:** MAINTENANCE · **Progress:** `█████░░░░░ 50%`
+> Universal config management (hexagonal, Rust + TypeScript). Library; TS side present, cross-language parity is the open gap. · updated 2026-06-02
+
 # Conft
 
 **Status:** maintenance
