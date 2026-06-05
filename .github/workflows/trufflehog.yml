@@ -11,6 +11,7 @@ on:
 timeout-minutes: 10
 permissions:
   contents: read
+
 jobs:
   trufflehog:
     runs-on: ubuntu-24.04
