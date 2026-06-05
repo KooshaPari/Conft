@@ -10,6 +10,10 @@ permissions:
   contents: read
   issues: write
   security-events: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   alert-sync:
