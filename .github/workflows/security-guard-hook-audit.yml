@@ -19,4 +19,4 @@ on:
     - cron: '0 12 * * 1'
 jobs:
   hook-audit:
-    uses: KooshaPari/phenoShared/.github/workflows/security-guard-hook-audit-reusable.yml@4b820a6d1eca7884e692e4ec4edf2b59732809cd
+    uses: KooshaPari/phenoShared/.github/workflows/security-guard-hook-audit-reusable.yml@72b9c6cbdb24c49189b0e7c7395d874830d1ed87
