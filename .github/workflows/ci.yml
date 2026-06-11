@@ -1,6 +1,11 @@
 name: CI
+
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 permissions:
   contents: read
@@ -9,12 +14,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
-on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
 jobs:
   ci:
     uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@72b9c6cbdb24c49189b0e7c7395d874830d1ed87
