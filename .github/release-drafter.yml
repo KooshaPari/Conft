@@ -1,0 +1,35 @@
+# Release Drafter configuration for Conft.
+# See https://github.com/release-drafter/release-drafter for the schema.
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+version-resolver:
+  major:
+    labels: ['breaking', 'major']
+  minor:
+    labels: ['feature', 'enhancement', 'minor']
+  patch:
+    labels: ['bug', 'fix', 'patch', 'chore', 'docs', 'ci']
+  default: patch
+categories:
+  - title: '🚨 Breaking Changes'
+    labels: ['breaking', 'major']
+  - title: '🚀 Features'
+    labels: ['feature', 'enhancement', 'minor']
+  - title: '🐛 Bug Fixes'
+    labels: ['bug', 'fix', 'patch']
+  - title: '🧰 Maintenance'
+    labels: ['chore', 'ci', 'deps', 'refactor']
+  - title: '📚 Documentation'
+    labels: ['docs']
+  - title: '🔒 Security'
+    labels: ['security']
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+change-title-escapes: '\<*_&'
+exclude-labels: ['skip-changelog']
+sort-by: title
+template: |
+  ## Changes
+
+  $CHANGES
+
+  **Full Changelog**: https://github.com/$OWNER/$REPOSITORY/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
