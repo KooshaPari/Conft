@@ -1,8 +1,8 @@
-# Conft
-
 > **Work-state:** alpha — `[######----] 60%`
 >
 > Build green, lint+test wiring broken, CodeQL pointed at Rust (wrong language), vitest pinned to a CVE-vulnerable range. See chore/lane-greenup PR.
+
+# Conft
 
 **Status:** maintenance
 
