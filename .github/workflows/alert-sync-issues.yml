@@ -10,10 +10,14 @@ permissions:
   contents: read
   issues: write
   security-events: read
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 
 jobs:
   alert-sync:
-    uses: KooshaPari/phenoShared/.github/workflows/alert-sync-issues-reusable.yml@4b820a6d1eca7884e692e4ec4edf2b59732809cd
+    uses: KooshaPari/phenoShared/.github/workflows/alert-sync-issues-reusable.yml@438e2e71e448c9f1f47f184d3ca4acbb28928677
     with:
       auto-label: auto-alert-sync
 
