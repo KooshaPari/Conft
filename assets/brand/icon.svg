@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="Conft — configuration &amp; feature flags">
+  <defs>
+    <linearGradient id="cf-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e1116"/>
+      <stop offset="1" stop-color="#090a0c"/>
+    </linearGradient>
+    <linearGradient id="cf-shield" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1a2228"/>
+      <stop offset="1" stop-color="#0a0d11"/>
+    </linearGradient>
+    <linearGradient id="cf-edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#c2410c"/>
+    </linearGradient>
+    <linearGradient id="cf-on" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="cf-off" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#1f2429"/>
+      <stop offset="1" stop-color="#0e1116"/>
+    </linearGradient>
+    <radialGradient id="cf-glow" cx="0.5" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#f97316" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#f97316" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="cf-shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#000" flood-opacity="0.55"/>
+    </filter>
+    <filter id="cf-glow-fx" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="512" height="512" rx="96" ry="96" fill="url(#cf-bg)"/>
+  <circle cx="256" cy="256" r="220" fill="url(#cf-glow)"/>
+
+  <!-- shield -->
+  <g filter="url(#cf-shadow)">
+    <polygon points="256,76 388,128 388,272 256,436 124,272 124,128"
+             fill="url(#cf-shield)" stroke="url(#cf-edge)" stroke-width="3"/>
+  </g>
+
+  <!-- inner panel -->
+  <polygon points="256,116 354,156 354,260 256,392 158,260 158,156"
+           fill="#0a0d11" fill-opacity="0.6" stroke="#f97316" stroke-opacity="0.25" stroke-width="1"/>
+
+  <!-- toggle row 1 — ON -->
+  <g transform="translate(256 188)">
+    <rect x="-78" y="-12" width="22" height="8" rx="2" fill="#7ebab5" opacity="0.55"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="url(#cf-on)"/>
+    <circle cx="106" cy="0" r="11" fill="#fff5e6" stroke="#fb923c" stroke-width="1.5"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="none" stroke="#fb923c" stroke-opacity="0.7" stroke-width="1.2"/>
+    <!-- on glow -->
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="url(#cf-on)" filter="url(#cf-glow-fx)" opacity="0.4"/>
+  </g>
+
+  <!-- toggle row 2 — ON -->
+  <g transform="translate(256 260)">
+    <rect x="-78" y="-12" width="22" height="8" rx="2" fill="#7ebab5" opacity="0.55"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="url(#cf-on)"/>
+    <circle cx="106" cy="0" r="11" fill="#fff5e6" stroke="#fb923c" stroke-width="1.5"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="none" stroke="#fb923c" stroke-opacity="0.7" stroke-width="1.2"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="url(#cf-on)" filter="url(#cf-glow-fx)" opacity="0.4"/>
+  </g>
+
+  <!-- toggle row 3 — OFF -->
+  <g transform="translate(256 332)">
+    <rect x="-78" y="-12" width="22" height="8" rx="2" fill="#7ebab5" opacity="0.3"/>
+    <rect x="56"  y="-14" width="64" height="28" rx="14" fill="url(#cf-off)" stroke="#2a3138" stroke-width="1"/>
+    <circle cx="70" cy="0" r="11" fill="#3a4148" stroke="#5b6470" stroke-width="1"/>
+  </g>
+
+  <!-- top notch -->
+  <polygon points="256,76 240,84 240,104 256,96 272,104 272,84" fill="#f97316" opacity="0.7"/>
+</svg>
