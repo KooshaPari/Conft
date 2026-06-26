@@ -38,7 +38,7 @@ export class EnvConfigSource implements ConfigSource {
   }
 
   async get(key: string): Promise<ConfigValue | undefined> {
-    const fullKey = this.prefix + key;
+    const fullKey = this.prefix + key.toUpperCase();
     const value = process.env[fullKey];
     if (value === undefined) return undefined;
     return this.parseValue(value);
