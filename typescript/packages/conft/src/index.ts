@@ -11,6 +11,8 @@
  */
 
 export * from './domain/config';
+export * from './domain/secret';
 export * from './ports/config-source';
 export * from './adapters/env-adapter';
 export * from './adapters/file-adapter';
+export * from './services/config-manager';
