@@ -1,54 +1,44 @@
 # Conft
 
-**Status:** maintenance
+**Status:** active (maintenance mode — TypeScript package, npm publish not yet automated)
 
-**Universal Configuration Management with Cross-Language Support**
+**TypeScript Configuration Management with Zod Validation**
 
-A hexagonal architecture-based configuration framework providing consistent, type-safe configuration management across Rust and TypeScript.
+A hexagonal architecture-based configuration library providing consistent, type-safe
+configuration management for TypeScript/Node.js applications.
+
+> **Note:** This repository currently ships one implementation: `@phenotype/config-ts`
+> (TypeScript). A Rust crate (`configkit`) is planned but not yet implemented — the
+> `rust/` directory does not exist in this repository.
 
 ## Philosophy
 
 Configuration should be:
+
 - **Layered**: Multiple sources with clear precedence
 - **Validated**: Schema-based validation at load time
 - **Type-safe**: Compile-time guarantees, runtime safety
-- **Portable**: Same patterns across languages
+- **Extensible**: Port/adapter pattern for new sources
 
-## Languages
+## Package
 
-| Language | Package | Location | Features |
-|----------|---------|----------|----------|
-| **Rust** | `configkit` | `rust/phenotype-config/` | Serde-based, hot reload |
-| **TypeScript** | `@phenotype/config-ts` | `typescript/packages/conft/` | Zod validation, async |
+| Language | Package | Location |
+|----------|---------|----------|
+| **TypeScript** | `@phenotype/config-ts` | `typescript/packages/conft/` |
 
 ## Features
 
-- ✅ **Layered Configuration** - File → Env → CLI precedence
-- ✅ **Multiple Formats** - TOML, YAML, JSON, ENV
-- ✅ **Schema Validation** - Type-safe with custom validators
-- ✅ **Hot Reload** - Watch and reload config files
-- ✅ **Environment Support** - Dev/staging/prod profiles
-- ✅ **Secrets Management** - Secure credential handling
-- 🔄 **Remote Config** - Planned (etcd, Consul)
-- 🔄 **Config Versioning** - Planned
+- ✅ **Layered Configuration** — File → Env → CLI precedence
+- ✅ **Multiple Formats** — TOML, YAML, JSON, ENV
+- ✅ **Schema Validation** — Zod-based, type-safe with custom validators
+- ✅ **Environment Support** — Dev/staging/prod profiles
+- ✅ **Secrets Management** — Secure credential handling
+- 🔄 **Hot Reload** — Planned (file-watcher integration)
+- 🔄 **Remote Config** — Planned (etcd, Consul)
+- 🔄 **Config Versioning** — Planned
+- 🔄 **Rust crate (`configkit`)** — Planned, not yet implemented
 
 ## Quick Start
-
-### Rust
-
-```rust
-use configkit::{Config, ConfigBuilder};
-
-let config = ConfigBuilder::new()
-    .with_file("config.toml")?
-    .with_env()
-    .with_cli_args()
-    .build()?;
-
-let db_url: String = config.get("database.url")?;
-```
-
-### TypeScript
 
 ```typescript
 import { ConfigBuilder } from '@phenotype/config-ts';
@@ -64,7 +54,7 @@ const dbUrl = config.get<string>('database.url');
 
 ## Architecture
 
-Both implementations follow hexagonal architecture:
+The TypeScript implementation follows hexagonal architecture:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -72,7 +62,7 @@ Both implementations follow hexagonal architecture:
 │                                                         │
 │  ┌───────────────────────────────────────────────────┐  │
 │  │              Application Layer                     │  │
-│  │         (Builder, Loader, Watcher)               │  │
+│  │         (Builder, Loader, ConfigManager)          │  │
 │  └───────────────────────────────────────────────────┘  │
 │                         │                               │
 │  ┌───────────────────────────────────────────────────┐  │
@@ -94,22 +84,13 @@ Both implementations follow hexagonal architecture:
 
 ## Development
 
-### Rust
-
-```bash
-cd rust/phenotype-config/
-cargo build
-cargo test
-cargo clippy -- -D warnings
-```
-
-### TypeScript
-
 ```bash
 cd typescript/packages/conft/
 npm install
 npm test
 npm run lint
+npm run typecheck
+npm run build
 ```
 
 ## License
