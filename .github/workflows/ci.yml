@@ -26,13 +26,11 @@ jobs:
         working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+      - uses: oven-sh/setup-bun@d3603674eff08ce926b5d1ecebf9eee5a00efc81 # v1.2.2
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: ./typescript/packages/conft/package.json
-      - run: npm ci
-      - run: npm run typecheck
+          bun-version: latest
+      - run: bun install
+      - run: bun run typecheck
 
   lint:
     name: Lint
@@ -42,13 +40,11 @@ jobs:
         working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+      - uses: oven-sh/setup-bun@d3603674eff08ce926b5d1ecebf9eee5a00efc81 # v1.2.2
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: ./typescript/packages/conft/package.json
-      - run: npm ci
-      - run: npm run lint
+          bun-version: latest
+      - run: bun install
+      - run: bun run lint
 
   test:
     name: Test
@@ -58,12 +54,10 @@ jobs:
         working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+      - uses: oven-sh/setup-bun@d3603674eff08ce926b5d1ecebf9eee5a00efc81 # v1.2.2
         with:
-          node-version: 20
-          cache: npm
-          cache-dependency-path: ./typescript/packages/conft/package.json
-      - run: npm ci
-      - run: npm run test
-      - run: npm run test:coverage
+          bun-version: latest
+      - run: bun install
+      - run: bun run test
+      - run: bun run test:coverage
 
