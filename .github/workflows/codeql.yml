@@ -20,7 +20,7 @@ permissions:
 
 jobs:
   analyze:
-    name: Analyze Rust
+    name: Analyze JavaScript
     runs-on: ubuntu-24.04
     permissions:
       actions: read
@@ -34,7 +34,7 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@dc73d59c2d7bd4f8194098a91219eeee6d8a1719 # v3.29.9
         with:
-          languages: rust
+          languages: javascript
 
       - name: Autobuild
         uses: github/codeql-action/autobuild@dc73d59c2d7bd4f8194098a91219eeee6d8a1719 # v3.29.9
@@ -42,4 +42,4 @@ jobs:
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@dc73d59c2d7bd4f8194098a91219eeee6d8a1719 # v3.29.9
         with:
-          category: "/language:rust"
+          category: "/language:javascript"

@@ -3,7 +3,6 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-
 on:
   push:
     branches: [main]
@@ -18,5 +17,14 @@ permissions:
   security-events: write
 
 jobs:
-  sast:
-    uses: KooshaPari/phenoShared/.github/workflows/sast-reusable.yml@438e2e71e448c9f1f47f184d3ca4acbb28928677 # pinned
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@dc73d59c2d7bd4f8194098a91219eeee6d8a1719 # v3.29.9
+        with:
+          languages: javascript
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@dc73d59c2d7bd4f8194098a91219eeee6d8a1719 # v3.29.9
