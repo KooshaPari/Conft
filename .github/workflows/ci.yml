@@ -14,7 +14,11 @@ permissions:
   contents: read
 
 jobs:
+  trace-gate:
+    name: FR Coverage Gate
+    uses: KooshaPari/phenotype-pm-core/.github/workflows/trace-gate.yml@main
   ci:
     uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@4b820a6d1eca7884e692e4ec4edf2b59732809cd
     with:
       language: typescript
+
