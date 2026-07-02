@@ -17,46 +17,44 @@ jobs:
   typecheck:
     name: TypeScript Check
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
       - run: npm install -g bun
-      - run: bun install
-      - run: bun run typecheck
+      - working-directory: ./typescript/packages/conft
+        run: bun install
+      - working-directory: ./typescript/packages/conft
+        run: bun run typecheck
 
   lint:
     name: Lint
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
       - run: npm install -g bun
-      - run: bun install
-      - run: bun run lint
+      - working-directory: ./typescript/packages/conft
+        run: bun install
+      - working-directory: ./typescript/packages/conft
+        run: bun run lint
 
   test:
     name: Test
     runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: ./typescript/packages/conft
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
       - run: npm install -g bun
-      - run: bun install
-      - run: bun run test
-      - run: bun run test:coverage
+      - working-directory: ./typescript/packages/conft
+        run: bun install
+      - working-directory: ./typescript/packages/conft
+        run: bun run test
+      - working-directory: ./typescript/packages/conft
+        run: bun run test:coverage
 
