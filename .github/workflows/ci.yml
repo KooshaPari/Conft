@@ -14,10 +14,6 @@ permissions:
   contents: read
 
 jobs:
-  trace-gate:
-    name: FR Coverage Gate
-    uses: KooshaPari/phenotype-pm-core/.github/workflows/trace-gate.yml@main
-
   typecheck:
     name: TypeScript Check
     runs-on: ubuntu-24.04
