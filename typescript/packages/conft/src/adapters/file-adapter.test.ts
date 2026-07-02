@@ -99,6 +99,30 @@ describe('FileConfigSource — write', () => {
     await writeFile(file, JSON.stringify({ a: 999 }), 'utf-8'); // mutate externally
     await expect(source.get('b')).resolves.toBe(2);
   });
+
+  it('set() rejects values that are not valid ConfigValues', async () => {
+    const file = join(dir, 'config.json');
+    await writeFile(file, JSON.stringify({}), 'utf-8');
+
+    const source = new FileConfigSource(file);
+
+    // null is not a valid ConfigValue — must be rejected.
+    await expect(source.set('key', null as never)).rejects.toBeInstanceOf(ConfigValidationError);
+    // undefined is not a valid ConfigValue — must be rejected.
+    await expect(source.set('key2', undefined as never)).rejects.toBeInstanceOf(ConfigValidationError);
+  });
+
+  it('set() rejects nested objects that are not string-valued records', async () => {
+    const file = join(dir, 'config.json');
+    await writeFile(file, JSON.stringify({}), 'utf-8');
+
+    const source = new FileConfigSource(file);
+
+    // Objects must be string-valued records (ConfigValueSchema). Mixed-type
+    // values should be rejected at write time so the file stays internally
+    // consistent.
+    await expect(source.set('key', { a: 1 } as never)).rejects.toBeInstanceOf(ConfigValidationError);
+  });
 });
 
 describe('FileConfigSource — typed errors', () => {

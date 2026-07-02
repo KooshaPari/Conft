@@ -5,7 +5,7 @@
  */
 
 import { ConfigSource } from '../ports/config-source';
-import { ConfigEntry, ConfigValue } from '../domain/config';
+import { ConfigEntry, ConfigValue, ConfigValueSchema } from '../domain/config';
 
 /**
  * Environment variable config source.
@@ -61,9 +61,26 @@ export class EnvConfigSource implements ConfigSource {
     // Try to parse as JSON for complex types
     try {
       const parsed = JSON.parse(value);
-      // Return original string if not a valid JSON type
-      if (typeof parsed === 'object' || Array.isArray(parsed)) {
-        return parsed;
+      // JSON.parse("null") returns JS null, which is not a valid ConfigValue.
+      // Treat the literal string "null" as the string "null".
+      if (parsed === null) {
+        return 'null' as ConfigValue;
+      }
+      if (Array.isArray(parsed)) {
+        // ConfigValueSchema only allows z.array(z.string()); filter out
+        // any non-string elements so the return value stays type-safe.
+        return parsed.filter(
+          (el: unknown): el is string => typeof el === 'string'
+        ) as ConfigValue;
+      }
+      if (typeof parsed === 'object') {
+        // ConfigValueSchema only allows z.record(z.string(), z.string());
+        // drop any key whose value is not a string.
+        const out: Record<string, string> = {};
+        for (const [k, v] of Object.entries(parsed)) {
+          if (typeof v === 'string') out[k] = v;
+        }
+        return out as ConfigValue;
       }
     } catch {
       // Not JSON, return as string

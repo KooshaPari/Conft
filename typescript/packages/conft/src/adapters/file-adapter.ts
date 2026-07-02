@@ -23,6 +23,7 @@ import {
   ConfigSourceNotFoundError,
   ConfigValidationError,
   ConfigValue,
+  ConfigValueSchema,
 } from '../domain/config';
 
 // Re-export the typed errors so consumers of `FileConfigSource` can
@@ -100,8 +101,19 @@ export class FileConfigSource implements ConfigSource {
   }
 
   async set(key: string, value: ConfigValue): Promise<void> {
+    // Validate the value against ConfigValueSchema before persisting so
+    // the file never contains invalid entries that would fail a re-read.
+    const result = ConfigValueSchema.safeParse(value);
+    if (!result.success) {
+      throw new ConfigValidationError(
+        `Invalid config value for key "${key}": ${result.error.format()._errors.join(', ')}`,
+        [key],
+        value,
+        { source: this.name, zodErrors: result.error.issues }
+      );
+    }
     const entries = await this.getEntries();
-    entries.set(key, value);
+    entries.set(key, result.data);
     await this.persist(entries);
     // Persist succeeded — refresh cache so we serve the new value.
     this.cache = entries;
