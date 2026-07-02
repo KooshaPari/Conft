@@ -17,8 +17,41 @@ jobs:
   trace-gate:
     name: FR Coverage Gate
     uses: KooshaPari/phenotype-pm-core/.github/workflows/trace-gate.yml@main
-  ci:
-    uses: KooshaPari/phenoShared/.github/workflows/ci-reusable.yml@4b820a6d1eca7884e692e4ec4edf2b59732809cd
-    with:
-      language: typescript
+
+  typecheck:
+    name: TypeScript Check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+
+  test:
+    name: Test
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run test
+      - run: npm run test:coverage
 
