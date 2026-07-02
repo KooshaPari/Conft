@@ -22,11 +22,7 @@ jobs:
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
-      - run: npm install -g bun
-      - working-directory: ./typescript/packages/conft
-        run: bun install
-      - working-directory: ./typescript/packages/conft
-        run: bun run typecheck
+      - run: npm install -g bun && cd ./typescript/packages/conft && bun install && bun run typecheck
 
   lint:
     name: Lint
@@ -36,11 +32,7 @@ jobs:
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
-      - run: npm install -g bun
-      - working-directory: ./typescript/packages/conft
-        run: bun install
-      - working-directory: ./typescript/packages/conft
-        run: bun run lint
+      - run: npm install -g bun && cd ./typescript/packages/conft && bun install && bun run lint
 
   test:
     name: Test
@@ -50,11 +42,5 @@ jobs:
       - uses: actions/setup-node@b1a25efc9b24b1faac6e16951a0a1c3e3b72081f # v4.1.0
         with:
           node-version: '20'
-      - run: npm install -g bun
-      - working-directory: ./typescript/packages/conft
-        run: bun install
-      - working-directory: ./typescript/packages/conft
-        run: bun run test
-      - working-directory: ./typescript/packages/conft
-        run: bun run test:coverage
+      - run: npm install -g bun && cd ./typescript/packages/conft && bun install && bun run test && bun run test:coverage
 
