@@ -28,7 +28,7 @@ jobs:
       # only valid at job level, not workflow level). Inlined a self-contained
       # equivalent below rather than depend on a dead repo.
       - name: Open/update issues for open code scanning alerts
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             const label = 'auto-alert-sync';
