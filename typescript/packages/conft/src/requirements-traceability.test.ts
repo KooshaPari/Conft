@@ -12,7 +12,7 @@ const documentedIds = [...new Set(requirements.match(/FR-[A-Z]+-\d{3}/g) ?? [])]
 const trace: ReadonlyArray<{
   id: string;
   status: Status;
-  evidence: string;
+  evidence: string | string[];
 }> = [
   { id: "FR-SCHEMA-001", status: "partial", evidence: "src/domain/config.ts" },
   { id: "FR-SCHEMA-002", status: "partial", evidence: "src/index.test.ts" },
@@ -25,7 +25,11 @@ const trace: ReadonlyArray<{
   { id: "FR-LAYER-003", status: "gap", evidence: "src/domain/secret.test.ts" },
   { id: "FR-HEX-001", status: "verified", evidence: "src/ports/config-source.ts" },
   { id: "FR-HEX-002", status: "verified", evidence: "src/services/config-manager.ts" },
-  { id: "FR-HEX-003", status: "verified", evidence: "src/adapters/file-adapter.ts" },
+  {
+    id: "FR-HEX-003",
+    status: "verified",
+    evidence: ["src/adapters/file-adapter.ts", "src/adapters/env-adapter.ts"],
+  },
 ];
 
 describe("functional requirement traceability", () => {
@@ -37,7 +41,10 @@ describe("functional requirement traceability", () => {
 
   it("keeps every evidence path resolvable", () => {
     for (const item of trace) {
-      expect(existsSync(resolve(root, item.evidence)), `${item.id}: ${item.evidence}`).toBe(true);
+      const paths = Array.isArray(item.evidence) ? item.evidence : [item.evidence];
+      for (const path of paths) {
+        expect(existsSync(resolve(root, path)), `${item.id}: ${path}`).toBe(true);
+      }
     }
   });
 

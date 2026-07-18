@@ -93,7 +93,7 @@ commits `bun.lock`; CI now installs Bun from an immutable action revision and us
 
 **ADR-QL-002: Upgrade security-sensitive test tooling without broad modernization.** Accepted.
 Vitest and its coverage provider move together to 4.1.10, Vite is constrained to patched 6.4.3,
-and Lodash ES to patched 4.18.0. Unrelated dependencies remain untouched.
+and Lodash ES to patched 4.18.1. Unrelated dependencies remain untouched.
 
 **ADR-QL-003: Treat traceability and satisfaction as separate metrics.** Accepted. Every FR has
 evidence, but partial and missing capabilities remain explicit rather than being converted into

@@ -1,10 +1,8 @@
 import { createRequire } from "node:module";
-import { pathToFileURL } from "node:url";
-import { resolve } from "node:path";
 
 const require = createRequire(import.meta.url);
 const cjs = require("../dist/index.js");
-const esm = await import(pathToFileURL(resolve("dist/index.mjs")).href);
+const esm = await import(new URL("../dist/index.mjs", import.meta.url).href);
 
 for (const [format, exports] of [
   ["CommonJS", cjs],
