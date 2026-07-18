@@ -18,10 +18,11 @@ TypeScript **configuration management** with **Zod** validation, hexagonal ports
 ## Scripts
 
 ```bash
-pnpm install
-pnpm build
-pnpm test
-pnpm typecheck
+bun install --frozen-lockfile
+bun run build
+bun run test
+bun run typecheck
+bun run check
 ```
 
 ## Related
